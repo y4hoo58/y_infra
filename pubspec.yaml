@@ -1,6 +1,6 @@
 name: y_infra
 description: A reusable Flutter infrastructure package — cache, storage, auth, network, database, permissions, formatters, and more.
-version: 0.0.1
+version: 0.0.2
 
 topics:
   - infrastructure
@@ -37,3 +37,4 @@ dependencies:
   firebase_database: ^12.2.0
   awesome_notifications: ^0.11.0
   flutter_dotenv: ^6.0.0
+  connectivity_plus: ^6.1.0
