@@ -10,8 +10,8 @@ class WriteOnlyCache implements ICache {
   T? get<T>(String key) => null;
 
   @override
-  void set<T>(String key, T data, {CacheType type = CacheType.global}) {
-    _delegate.set<T>(key, data, type: type);
+  void set<T>(String key, T data, {CacheType type = CacheType.global, Duration? ttl}) {
+    _delegate.set<T>(key, data, type: type, ttl: ttl);
   }
 
   @override

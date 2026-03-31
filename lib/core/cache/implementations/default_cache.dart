@@ -10,14 +10,18 @@ class DefaultCache implements ICache {
   final Map<String, CacheData> _cache = {};
 
   @override
-  void set<T>(String key, T data, {CacheType type = CacheType.global}) {
-    _cache[key] = CacheData<T>(type, data);
+  void set<T>(String key, T data, {CacheType type = CacheType.global, Duration? ttl}) {
+    _cache[key] = CacheData<T>(type, data, ttl: ttl);
   }
 
   @override
   T? get<T>(String key) {
     final data = _cache[key];
     if (data == null) return null;
+    if (data.isExpired) {
+      _cache.remove(key);
+      return null;
+    }
     if (data is! CacheData<T>) return null;
     return data.data;
   }

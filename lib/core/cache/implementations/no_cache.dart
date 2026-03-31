@@ -6,7 +6,7 @@ class NoCache implements ICache {
   T? get<T>(String key) => null;
 
   @override
-  void set<T>(String key, T data, {CacheType type = CacheType.global}) {}
+  void set<T>(String key, T data, {CacheType type = CacheType.global, Duration? ttl}) {}
 
   @override
   void remove(String key) {}
