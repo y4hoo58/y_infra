@@ -73,6 +73,10 @@ export 'utils/formatters/separator_input_formatter.dart';
 export 'utils/formatters/credit_card_number_input_formatter.dart';
 export 'utils/formatters/card_expiry_input_formatter.dart';
 
+// Connectivity
+export 'platform/connectivity/i_connectivity_service.dart';
+export 'platform/connectivity/implementations/connectivity_service.dart';
+
 // Location
 export 'platform/location/i_location_service.dart';
 export 'platform/location/implementations/location_service.dart';
