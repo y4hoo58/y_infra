@@ -6,7 +6,7 @@ import '../../core/notifier/i_notifier_service.dart';
 import '../i_auth_token_storage.dart';
 import '../objects/token_pair.dart';
 import 'auth_state.dart';
-import 'unauthenticated_reason.dart';
+import '../enums/unauthenticated_reason.dart';
 
 /// A base auth cubit that manages authentication state.
 ///

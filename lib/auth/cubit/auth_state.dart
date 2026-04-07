@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import 'unauthenticated_reason.dart';
+import '../enums/unauthenticated_reason.dart';
 
 abstract class AuthState extends Equatable {
   const AuthState();

@@ -51,7 +51,7 @@ export 'auth/i_auth_token_storage.dart';
 export 'auth/implementations/auth_token_storage.dart';
 export 'auth/cubit/auth_cubit.dart';
 export 'auth/cubit/auth_state.dart';
-export 'auth/cubit/unauthenticated_reason.dart';
+export 'auth/enums/unauthenticated_reason.dart';
 
 // Generators
 export 'utils/generators/uuid/i_uuid_provider.dart';
