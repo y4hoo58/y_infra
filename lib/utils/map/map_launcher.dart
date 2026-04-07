@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../base_features/mixins/snackbar_y.dart';
+import '../../mixins/snackbar_y.dart';
 
 class MapLauncher with SnackBarY {
   final Uri Function(double lat, double lng) appleMapsUrlBuilder;

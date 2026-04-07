@@ -99,14 +99,14 @@ export 'utils/validators/validator_messages.dart';
 export 'utils/validators/validators.dart';
 
 // UI / Base Features
-export 'base_features/mixins/snackbar_y.dart';
+export 'mixins/snackbar_y.dart';
 export 'utils/map/map_launcher.dart';
-export 'base_features/components/bottom_sheet_selector/cubit/bottom_sheet_selector_cubit.dart';
-export 'base_features/components/bottom_sheet_selector/bottom_sheet_selector_feature.dart';
-export 'base_features/components/bottom_sheet_selector/bottom_sheet_selector_container.dart';
-export 'base_features/components/bottom_sheet_selector/widgets/bottom_sheet_selector_empty_container.dart';
-export 'base_features/components/bottom_sheet_selector/widgets/bottom_sheet_selector_selected_container.dart';
-export 'base_features/components/bottom_sheet_selector/widgets/searchable_bottom_sheet_list.dart';
+export 'components/bottom_sheet_selector/cubit/bottom_sheet_selector_cubit.dart';
+export 'components/bottom_sheet_selector/bottom_sheet_selector_feature.dart';
+export 'components/bottom_sheet_selector/bottom_sheet_selector_container.dart';
+export 'components/bottom_sheet_selector/widgets/bottom_sheet_selector_empty_container.dart';
+export 'components/bottom_sheet_selector/widgets/bottom_sheet_selector_selected_container.dart';
+export 'components/bottom_sheet_selector/widgets/searchable_bottom_sheet_list.dart';
 
 // Database
 export 'data/database/objects/i_database_table.dart';
