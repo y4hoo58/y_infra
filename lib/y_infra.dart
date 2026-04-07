@@ -167,8 +167,8 @@ export 'push/objects/i_remote_message_handler_result.dart';
 export 'push/utility/environment_interpreter.dart';
 
 // Data
-export 'data/i_remote_datasource.dart';
-export 'data/network/base_network_config.dart';
+export 'data/network/datasource/i_remote_datasource.dart';
+export 'data/network/config/base_network_config.dart';
 export 'data/network/objects/paginated_response.dart';
 export 'data/network/interceptors/interceptor_pipeline.dart';
 export 'data/network/interceptors/auth_interceptor.dart';

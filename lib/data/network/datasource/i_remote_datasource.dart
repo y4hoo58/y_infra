@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../auth/implementations/auth_token_storage.dart';
+import '../../../auth/implementations/auth_token_storage.dart';
 
 abstract class IRemoteDatasource {
   final AuthTokenStorage authTokenStorage;
