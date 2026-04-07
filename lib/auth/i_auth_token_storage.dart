@@ -1,4 +1,4 @@
-import 'token_pair.dart';
+import 'objects/token_pair.dart';
 
 abstract class IAuthTokenStorage {
   Future<bool> saveTokenPair(TokenPair tokenPair);

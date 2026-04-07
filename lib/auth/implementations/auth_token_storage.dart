@@ -1,6 +1,6 @@
 import '../../core/storage/i_local_storage.dart';
 import '../i_auth_token_storage.dart';
-import '../token_pair.dart';
+import '../objects/token_pair.dart';
 
 class AuthTokenStorage implements IAuthTokenStorage {
   static const String _accessTokenKey = 'access_token';

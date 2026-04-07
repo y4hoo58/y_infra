@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../auth/implementations/auth_token_storage.dart';
-import '../../../auth/token_pair.dart';
+import '../../../auth/objects/token_pair.dart';
 
 typedef TokenRefreshCallback = Future<TokenPair?> Function(String refreshToken);
 typedef AuthFailureCallback = void Function();
