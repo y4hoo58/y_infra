@@ -139,7 +139,6 @@ export 'base_features/operation/base_operation_state.dart';
 export 'base_features/paginated/cubit/paginated_cubit.dart';
 export 'base_features/paginated/cubit/paginated_state.dart';
 export 'base_features/paginated/cubit/filterable_paginated_cubit.dart';
-export 'base_features/mixins/safe_operation_mixin.dart';
 
 // Firebase
 export 'firebase/i_firebase_service.dart';

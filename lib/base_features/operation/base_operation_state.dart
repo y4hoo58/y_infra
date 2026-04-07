@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../core/errors/app_error.dart';
 
-sealed class BaseOperationState extends Equatable {
+abstract class BaseOperationState extends Equatable {
   const BaseOperationState();
 
   @override
