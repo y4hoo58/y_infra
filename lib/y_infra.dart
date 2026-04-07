@@ -137,8 +137,8 @@ export 'base_features/list/base_list_cubit.dart';
 export 'base_features/list/base_list_state.dart';
 export 'base_features/operation/base_operation_cubit.dart';
 export 'base_features/operation/base_operation_state.dart';
-export 'base_features/paginated/cubit/paginated_cubit.dart';
-export 'base_features/paginated/cubit/paginated_state.dart';
+export 'base_features/paginated/paginated_cubit.dart';
+export 'base_features/paginated/paginated_state.dart';
 
 // Firebase
 export 'firebase/i_firebase_service.dart';

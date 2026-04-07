@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../data/network/objects/paginated_response.dart';
-import '../../../core/errors/error_mapper.dart';
+import '../../data/network/objects/paginated_response.dart';
+import '../../core/errors/error_mapper.dart';
 import 'paginated_state.dart';
 
 /// Base cubit for paginated list loading with load-more, refresh,
