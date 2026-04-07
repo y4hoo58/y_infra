@@ -100,6 +100,7 @@ export 'utils/validators/validators.dart';
 
 // UI / Base Features
 export 'mixins/snackbar_y.dart';
+export 'mixins/filterable_mixin.dart';
 export 'utils/map/map_launcher.dart';
 export 'components/bottom_sheet_selector/cubit/bottom_sheet_selector_cubit.dart';
 export 'components/bottom_sheet_selector/bottom_sheet_selector_feature.dart';
@@ -138,7 +139,6 @@ export 'base_features/operation/base_operation_cubit.dart';
 export 'base_features/operation/base_operation_state.dart';
 export 'base_features/paginated/cubit/paginated_cubit.dart';
 export 'base_features/paginated/cubit/paginated_state.dart';
-export 'base_features/paginated/cubit/filterable_paginated_cubit.dart';
 
 // Firebase
 export 'firebase/i_firebase_service.dart';
