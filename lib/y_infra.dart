@@ -100,7 +100,7 @@ export 'utils/validators/validators.dart';
 
 // UI / Base Features
 export 'base_features/mixins/snackbar_y.dart';
-export 'base_features/utilities/map_launcher.dart';
+export 'utils/map/map_launcher.dart';
 export 'base_features/components/bottom_sheet_selector/cubit/bottom_sheet_selector_cubit.dart';
 export 'base_features/components/bottom_sheet_selector/bottom_sheet_selector_feature.dart';
 export 'base_features/components/bottom_sheet_selector/bottom_sheet_selector_container.dart';
