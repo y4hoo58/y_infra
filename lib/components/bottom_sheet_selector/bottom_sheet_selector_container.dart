@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'cubit/bottom_sheet_selector_cubit.dart';
 
+/// Widget that shows a bottom sheet for item selection and renders the
+/// appropriate child based on whether an item is selected.
 class BottomSheetSelectorContainer<T> extends StatelessWidget {
   final Widget emptyChild;
   final Widget Function(T) childBuilder;

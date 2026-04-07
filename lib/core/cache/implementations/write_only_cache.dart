@@ -1,6 +1,8 @@
 import '../i_cache.dart';
 import '../objects/cache_type.dart';
 
+/// A cache wrapper that delegates writes and removals to [_delegate] but
+/// always returns `null` for reads.
 class WriteOnlyCache implements ICache {
   final ICache _delegate;
 

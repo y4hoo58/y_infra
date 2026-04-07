@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 
 import '../../../auth/implementations/auth_token_storage.dart';
 
+/// Base class for remote data sources that execute plain or
+/// authenticated HTTP requests via [Dio].
 abstract class IRemoteDatasource {
   final AuthTokenStorage authTokenStorage;
   final Dio dio;

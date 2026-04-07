@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../core/errors/app_error.dart';
 
+/// Base state hierarchy for list-based features (initial, loading, loaded, error).
 abstract class BaseListState<T> extends Equatable {
   const BaseListState();
 

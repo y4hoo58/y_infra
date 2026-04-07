@@ -1,5 +1,6 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 
+/// Utility for parsing environment variable strings into typed values (booleans, enums).
 class EnvironmentInterpreter {
   const EnvironmentInterpreter();
 

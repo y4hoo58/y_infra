@@ -5,6 +5,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../i_local_storage.dart';
 
+/// [ILocalStorage] implementation backed by [FlutterSecureStorage] for
+/// encrypted key-value persistence.
 class SecureStorage implements ILocalStorage {
   final FlutterSecureStorage _storage;
 

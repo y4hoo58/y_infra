@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/theme/y_infra_colors.dart';
 
+/// Mixin providing convenience methods to show success, error, warning, and default snack bars.
 mixin SnackBarY {
   void displaySuccessSnack({
     required BuildContext context,

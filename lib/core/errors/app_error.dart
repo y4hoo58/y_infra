@@ -1,5 +1,7 @@
 import 'error_category.dart';
 
+/// Base application error with a machine-readable [code], human-readable
+/// [message], and [ErrorCategory] for classification.
 class AppError implements Exception {
   final String code;
   final String message;

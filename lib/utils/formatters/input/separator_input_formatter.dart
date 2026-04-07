@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 
+/// Generic text input formatter that inserts a separator character at specified indexes.
 class SeparatorInputFormatter extends TextInputFormatter {
   final List<int> separatorIndexes;
   final String separator;

@@ -2,6 +2,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../i_local_storage.dart';
 
+/// [ILocalStorage] implementation backed by [SharedPreferences] for simple
+/// key-value persistence.
 class SharedPreferencesStorage implements ILocalStorage {
   final SharedPreferences _prefs;
 

@@ -3,6 +3,7 @@ import 'dart:io';
 import '../path/i_path_provider.dart';
 import '../converter/i_file_converter.dart';
 
+/// Interface for file controllers that handle creating, loading, and saving files.
 abstract class IFileController {
   const IFileController();
 

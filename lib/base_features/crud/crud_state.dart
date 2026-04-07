@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+/// Sealed state hierarchy for CRUD operations (loading, loaded, saving, deleting, error).
 sealed class CrudState<T> extends Equatable {
   const CrudState();
 

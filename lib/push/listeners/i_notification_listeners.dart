@@ -1,5 +1,6 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 
+/// Defines callbacks for Awesome Notifications lifecycle events (action, dismiss, create, display).
 abstract class INotificationListeners {
   final Future<void> Function(ReceivedAction r) onActionReceived;
   final Future<void> Function(ReceivedAction r) onDismissActionReceived;

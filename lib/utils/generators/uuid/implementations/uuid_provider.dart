@@ -3,6 +3,7 @@ import 'package:uuid/uuid.dart';
 import '../../../../core/storage/i_local_storage.dart';
 import '../i_uuid_provider.dart';
 
+/// UUID provider that generates a v4 UUID on first call and caches it in local storage.
 class UuidProvider extends IUuidProvider {
   final ILocalStorage _storage;
 

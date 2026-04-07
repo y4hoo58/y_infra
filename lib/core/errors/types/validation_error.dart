@@ -1,6 +1,8 @@
 import '../app_error.dart';
 import '../error_category.dart';
 
+/// Error representing input validation failures, optionally carrying a list
+/// of individual field-level [errors].
 class ValidationError extends AppError {
   final List<String>? errors;
 

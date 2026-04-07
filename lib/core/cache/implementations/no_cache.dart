@@ -1,6 +1,7 @@
 import '../i_cache.dart';
 import '../objects/cache_type.dart';
 
+/// A no-op cache implementation that never stores or returns data.
 class NoCache implements ICache {
   @override
   T? get<T>(String key) => null;

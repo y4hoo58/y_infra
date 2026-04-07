@@ -5,6 +5,7 @@ import '../configs/notification_channel_config.dart';
 import '../listeners/i_notification_listeners.dart';
 import '../objects/i_custom_remote_message.dart';
 
+/// Manages push notification initialization, channel configuration from env, and local/remote push.
 abstract class IPushNotificationManager {
   final INotificationListeners notificationListeners;
   final String envFilePath;

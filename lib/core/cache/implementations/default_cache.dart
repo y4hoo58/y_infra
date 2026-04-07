@@ -2,6 +2,7 @@ import '../i_cache.dart';
 import '../objects/cache_data.dart';
 import '../objects/cache_type.dart';
 
+/// Singleton in-memory cache that stores entries with optional TTL expiration.
 class DefaultCache implements ICache {
   static final DefaultCache _instance = DefaultCache._();
   factory DefaultCache() => _instance;

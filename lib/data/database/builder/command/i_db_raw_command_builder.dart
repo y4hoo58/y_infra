@@ -1,5 +1,7 @@
 import '../../objects/i_database_table.dart';
 
+/// Base class for builders that produce raw SQL command strings
+/// for a given database table.
 abstract class IDbRawCommandBuilder {
   final IDatabaseTable table;
 

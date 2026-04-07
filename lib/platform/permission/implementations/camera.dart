@@ -4,6 +4,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../i_permission_handler.dart';
 
+/// Platform-aware handler for requesting and checking camera permission.
 class CameraPermissionHandler extends IPermissionHandler {
   const CameraPermissionHandler();
 
@@ -30,6 +31,7 @@ class CameraPermissionHandler extends IPermissionHandler {
   }
 }
 
+/// Android-specific camera permission handler.
 class AndroidCameraPermissionHandler extends CameraPermissionHandler {
   const AndroidCameraPermissionHandler();
 
@@ -58,6 +60,7 @@ class AndroidCameraPermissionHandler extends CameraPermissionHandler {
   }
 }
 
+/// iOS-specific camera permission handler.
 class IosCameraPermissionHandler extends CameraPermissionHandler {
   const IosCameraPermissionHandler();
 

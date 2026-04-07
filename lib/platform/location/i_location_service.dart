@@ -1,5 +1,6 @@
 import 'package:geolocator/geolocator.dart';
 
+/// Interface for obtaining and caching device location with configurable TTL.
 abstract class ILocationService {
   final Duration positionCacheDuration;
 

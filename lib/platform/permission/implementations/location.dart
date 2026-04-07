@@ -4,6 +4,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../i_permission_handler.dart';
 
+/// Platform-aware handler for requesting and checking location permission.
 class LocationPermissionHandler extends IPermissionHandler {
   const LocationPermissionHandler();
 
@@ -22,6 +23,7 @@ class LocationPermissionHandler extends IPermissionHandler {
   }
 }
 
+/// iOS-specific location permission handler.
 class IosLocationPermissionHandler extends IPermissionHandler {
   const IosLocationPermissionHandler();
 
@@ -58,6 +60,7 @@ class IosLocationPermissionHandler extends IPermissionHandler {
   }
 }
 
+/// Android-specific location permission handler.
 class AndroidLocationPermissionHandler extends IPermissionHandler {
   const AndroidLocationPermissionHandler();
 

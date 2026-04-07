@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../cubit/bottom_sheet_selector_cubit.dart';
 
+/// Styled tappable container shown when no item is selected in the bottom sheet selector.
 class BottomSheetSelectorEmptyContainer extends StatelessWidget {
   final Widget child;
   const BottomSheetSelectorEmptyContainer({super.key, required this.child});

@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/widgets.dart';
 
+/// Formats [DateTime] values into locale-aware date, time, and duration strings.
 class DateTimeFormatter {
   const DateTimeFormatter();
 

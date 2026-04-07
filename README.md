@@ -21,23 +21,25 @@ lib/
 ├── core/           Cache, errors, logging, notifier, storage, theme
 ├── data/           Database (SQLite), file (CSV/JSON), network (Dio)
 ├── domain/         Repository with queue/dedup and cache invalidation
-├── auth/           Token pair management
+├── auth/           Token storage, AuthCubit, auth state management
 ├── firebase/       Analytics, messaging, realtime database
 ├── push/           Push notifications (Awesome Notifications)
-├── platform/       Permission handlers, location service
-├── base_features/  CRUD, list, paginated, operation cubits + UI components
-└── utils/          Formatters, generators, validators, routing
+├── platform/       Permission handlers, connectivity, location
+├── base_features/  CRUD, list, paginated, operation cubits
+├── components/     Reusable UI components (bottom sheet selector)
+├── mixins/         SnackBarY, FilterableMixin
+└── utils/          Formatters, generators, validators, routing, map
 ```
 
 ## Core
 
 ### Cache
 
-In-memory cache with type-safe storage, multiple strategies, and cache invalidation.
+In-memory cache with type-safe storage, TTL support, multiple strategies, and cache invalidation.
 
 ```dart
 final cache = DefaultCache();
-cache.set('users', userList, type: CacheType.personal);
+cache.set('users', userList, type: CacheType.personal, ttl: Duration(minutes: 10));
 final users = cache.get<List<User>>('users');
 cache.removeByPrefix('user_');
 cache.removeAllType(CacheType.personal);
@@ -71,6 +73,16 @@ final storage = SecureStorage(FlutterSecureStorage());
 await storage.save<String>('key', 'value');
 await storage.save<Map>('data', {'nested': true});
 final value = await storage.get<String>('key');
+```
+
+### Logging
+
+Structured logging with configurable printers and log levels.
+
+```dart
+final logger = DebugLogger(printer: ConsolePrinter());
+logger.info('User logged in', data: LogData(tag: 'AUTH'));
+logger.error('Failed to fetch', data: LogData(tag: 'API'));
 ```
 
 ### Notifier
@@ -118,12 +130,12 @@ A composable interceptor that runs a list of interceptors in sequence. If any in
 ```dart
 dio.interceptors.add(
   InterceptorPipeline([
-    HeaderInterceptor(appVersion: '1.0.0'),
     AuthInterceptor(
       authTokenStorage: tokenStorage,
       onTokenRefresh: (refresh) => api.refreshToken(refresh),
-      onAuthFailure: () => router.go('/login'),
-      retryDio: Dio(), // separate Dio instance for retry
+      onAuthFailure: () => authCubit.logout(),
+      retryDio: Dio(BaseOptions(baseUrl: 'https://api.example.com')),
+      skipAuthPaths: ['/login', '/register'],
     ),
     LoggingInterceptor(),
   ]),
@@ -140,7 +152,7 @@ Any interceptor can short-circuit the pipeline:
 - `handler.reject(error)` — skip remaining interceptors, return the error
 - `handler.next(...)` — continue to the next interceptor
 
-You can also use each interceptor standalone without `InterceptorPipeline`:
+Each interceptor also works standalone without `InterceptorPipeline`:
 
 ```dart
 dio.interceptors.addAll([
@@ -149,26 +161,21 @@ dio.interceptors.addAll([
 ]);
 ```
 
-#### AuthInterceptor
+#### Remote Datasource
 
-JWT auth with proactive token refresh, 401 retry, and concurrent refresh locking.
-
-```dart
-AuthInterceptor(
-  authTokenStorage: tokenStorage,
-  onTokenRefresh: (refreshToken) => api.refreshToken(refreshToken),
-  onAuthFailure: () => authCubit.logout(),
-  retryDio: Dio(BaseOptions(baseUrl: 'https://api.example.com')),
-  skipAuthPaths: ['/login', '/register'], // paths that don't need auth
-)
-```
-
-#### LoggingInterceptor
-
-Logs requests, responses, and errors to the debug console. Only active in debug mode. Masks authorization headers and truncates long response bodies.
+Base class for API calls with authenticated request support.
 
 ```dart
-LoggingInterceptor()
+class UserRemoteDatasource extends IRemoteDatasource {
+  UserRemoteDatasource(super.authTokenStorage, super.dio);
+
+  Future<User> getUser(int id) => doRequest(
+    () async {
+      final response = await dio.get('/users/$id');
+      return User.fromJson(response.data);
+    },
+  );
+}
 ```
 
 ### Database
@@ -218,7 +225,9 @@ class UserRepository extends IRepository {
 
 ## Auth
 
-Token pair storage with interface.
+Token storage, state management, and automatic auth failure handling.
+
+### Token Storage
 
 ```dart
 final tokenStorage = AuthTokenStorage(secureStorage);
@@ -229,29 +238,95 @@ await tokenStorage.saveTokenPair(TokenPair(
 final pair = await tokenStorage.getTokenPair();
 ```
 
+### AuthCubit
+
+Base auth cubit that manages authentication state. Does NOT handle login — that's project-specific. Call `onAuthenticated` after a successful login.
+
+```dart
+// Setup
+final authCubit = AuthCubit(
+  tokenStorage: tokenStorage,
+  notifier: notifierService,         // optional: listens for auth failures
+  authFailureKey: 'auth_failure',    // key that AuthInterceptor notifies on
+);
+
+// On app startup
+await authCubit.checkAuth();
+
+// After successful login
+final tokens = await api.login(email, password);
+authCubit.onAuthenticated(tokens);
+
+// Logout
+await authCubit.logout();
+
+// Listen to state changes
+BlocBuilder<AuthCubit, AuthState>(
+  builder: (context, state) => switch (state) {
+    Authenticated() => HomePage(),
+    Unauthenticated(reason: final reason) => LoginPage(reason: reason),
+    AuthLoading() => SplashScreen(),
+    _ => SplashScreen(),
+  },
+)
+```
+
+Auth states are `base class` — extend them in your project:
+
+```dart
+class AuthenticatedWithUser extends Authenticated {
+  final User user;
+  const AuthenticatedWithUser(this.user);
+}
+```
+
 ## Base Features
 
-Cubit-based state management patterns for common CRUD operations.
+Cubit-based state management patterns for common operations.
+
+### Operation
+
+Single async operation with automatic state management and duplicate call guard.
+
+```dart
+class DeleteItemCubit extends BaseOperationCubit<void> {
+  final ItemRepository _repo;
+  DeleteItemCubit(this._repo);
+
+  Future<void> delete(int id) => execute(
+    targetId: id,
+    operation: () => _repo.delete(id),
+  );
+}
+```
+
+States: `OperationInitial` → `OperationInProgress` → `OperationSuccess<T>` / `OperationFailure`
 
 ### List
 
 ```dart
 class StoresCubit extends BaseListCubit<Store> {
+  final StoreRepository _repo;
+  StoresCubit(this._repo);
+
   @override
-  Future<List<Store>> fetchItems() => repository.getStores();
+  Future<List<Store>> fetchItems() => _repo.getStores();
 }
 ```
 
 ### Paginated
 
 ```dart
-class ProductsCubit extends FilterablePaginatedCubit<Product> {
+class ProductsCubit extends PaginatedCubit<Product> {
+  final ProductRepository _repo;
+  ProductsCubit(this._repo);
+
   @override
   int getId(Product item) => item.id;
 
   @override
   Future<PaginatedResponse<Product>> fetchPage(int page, int pageSize) =>
-    repository.getProducts(page: page, pageSize: pageSize, search: searchQuery);
+    _repo.getProducts(page: page, pageSize: pageSize);
 }
 ```
 
@@ -259,24 +334,68 @@ class ProductsCubit extends FilterablePaginatedCubit<Product> {
 
 Full create/read/update/delete with filtering and selection.
 
-### Operation
-
-Single operation state management (create, update, delete, toggle).
-
-### SafeOperationMixin
-
-Eliminates duplicated try-catch-emit patterns.
-
 ```dart
-class MyFeatureCubit extends Cubit<MyState> with SafeOperationMixin<MyState> {
-  Future<void> loadData() => safeExecute(
-    loadingState: MyLoading(),
-    operation: () => repository.getData(),
-    onSuccess: (data) => MyLoaded(data),
-    onError: (error) => MyError(error),
+class UsersCubit extends CrudCubit<User> {
+  final UserRepository _repo;
+  UsersCubit(this._repo);
+
+  @override
+  int getId(User item) => item.id;
+
+  @override
+  Future<List<User>> fetchItems() => _repo.getUsers();
+
+  Future<void> createUser(CreateUserDto dto) => performSave(
+    operation: () => _repo.create(dto),
+    successMessage: 'User created',
+    updateList: (user) => addToList(user),
+  );
+
+  Future<void> deleteUser(int id) => performDelete(
+    operation: () => _repo.delete(id),
+    id: id,
+    successMessage: 'User deleted',
   );
 }
 ```
+
+## Mixins
+
+### FilterableMixin
+
+Generic filtering mixin that works with any Cubit. Adds search, sort, and filter state.
+
+```dart
+class ProductsCubit extends PaginatedCubit<Product> with FilterableMixin {
+  @override
+  void onFiltersChanged() => refresh();
+
+  @override
+  Future<PaginatedResponse<Product>> fetchPage(int page, int pageSize) =>
+    repo.getProducts(page: page, search: searchQuery, sortBy: sortBy);
+}
+
+// Also works with BaseListCubit
+class StoresCubit extends BaseListCubit<Store> with FilterableMixin {
+  @override
+  void onFiltersChanged() => refresh();
+}
+```
+
+### SnackBarY
+
+Mixin for displaying themed snackbars.
+
+```dart
+class MyWidget extends StatelessWidget with SnackBarY {
+  void onTap(BuildContext context) {
+    displaySuccessSnack(context: context, message: 'Saved!');
+    displayErrorSnack(context: context, message: 'Something went wrong');
+  }
+}
+```
+
+## Components
 
 ### Bottom Sheet Selector
 
@@ -309,6 +428,14 @@ await camera.askPermIfNeeded();
 
 **Handlers:** Camera, Location, Notification, Storage, ExternalStorage, MotionActivity
 
+### Connectivity
+
+```dart
+final connectivity = ConnectivityService();
+final isOnline = await connectivity.isConnected;
+connectivity.onStatusChange.listen((status) => print(status));
+```
+
 ### Location
 
 ```dart
@@ -321,11 +448,17 @@ final stream = await location.positionStream;
 
 ### Formatters
 
-- `DateInputFormatter` -- DD/MM/YYYY input mask
-- `UpperCaseInputFormatter` -- uppercase text input
-- `PhoneNumberInputFormatter` -- 555 555 55 55 format
-- `DateTimeFormatter` -- locale-aware date/time formatting
-- `PriceFormatter` -- price, discount, range formatting
+**Input formatters** (for `TextFormField`):
+- `SeparatorInputFormatter` — configurable base for masked input
+- `DateInputFormatter` — DD/MM/YYYY input mask
+- `UpperCaseInputFormatter` — uppercase text input
+- `PhoneNumberInputFormatter` — 555 555 55 55 format
+- `CreditCardNumberInputFormatter` — card number masking
+- `CardExpiryInputFormatter` — MM/YY card expiry
+
+**Display formatters:**
+- `DateTimeFormatter` — locale-aware date/time formatting
+- `PriceFormatter` — price, discount, range formatting
 
 ### Validators
 
@@ -342,6 +475,27 @@ final v = Validators(
 TextFormField(validator: v.email());
 TextFormField(validator: v.password(minLength: 8));
 TextFormField(validator: v.mustMatch(() => passwordController.text));
+```
+
+### Map Launcher
+
+Opens Apple Maps or Google Maps for a given coordinate.
+
+```dart
+final mapLauncher = MapLauncher(
+  errorMessage: 'Could not open maps',
+);
+mapLauncher.open(context: context, latitude: 41.0, longitude: 29.0);
+```
+
+### Routing
+
+Navigation observer for tracking route stack.
+
+```dart
+MaterialApp(
+  navigatorObservers: [AppNavObserver()],
+)
 ```
 
 ## License

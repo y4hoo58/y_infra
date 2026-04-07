@@ -11,6 +11,8 @@ import '../mapper/insert/i_db_insert_data_raw_mapper.dart';
 import '../mapper/update/i_db_update_data_mapper.dart';
 import '../objects/i_database_table.dart';
 
+/// Concrete SQLite database manager that handles table creation on open
+/// and delegates command building to dedicated builder classes.
 class DbManager extends IDbManager {
   final List<IDatabaseTable> initialTables;
 

@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 @pragma('vm:entry-point')
+/// Defines callbacks for handling Firebase messages in foreground, background, and on tap.
 abstract class IFirebaseMessageListener {
   final Function(RemoteMessage) onMessage;
 

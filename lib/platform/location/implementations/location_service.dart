@@ -2,6 +2,7 @@ import 'package:geolocator/geolocator.dart';
 
 import '../i_location_service.dart';
 
+/// Concrete location service using Geolocator with position caching and streaming.
 class LocationService extends ILocationService {
   LocationService({required super.positionCacheDuration}) {
     init();

@@ -2,6 +2,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 
 import '../utility/environment_interpreter.dart';
 
+/// Configuration for an Awesome Notifications channel, constructable from environment variables.
 class PushNotificationChannelConfig {
   final String channelKey;
   final String channelName;

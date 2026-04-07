@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 
 import '../configs/notification_channel_config.dart';
 
+/// Base notification content built from a remote notification and channel config.
 abstract class ICustomNotificationContent extends NotificationContent {
   ICustomNotificationContent(
     PushNotificationChannelConfig channelConfig,

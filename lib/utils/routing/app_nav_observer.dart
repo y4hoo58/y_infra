@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'objects/route_stack_item.dart';
 
+/// Navigator observer that maintains an in-memory stack of visited routes.
 class AppNavObserver extends NavigatorObserver {
   final navStack = <RouteStackItem>[];
 

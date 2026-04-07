@@ -2,6 +2,7 @@ import 'package:http/http.dart';
 
 import 'log_level.dart';
 
+/// Base class for structured log entries carrying a message and [LogLevel].
 abstract class LogData {
   const LogData();
 

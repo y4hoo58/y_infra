@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/errors/error_mapper.dart';
 import 'base_list_state.dart';
 
+/// Base cubit for fetching, displaying, and manipulating a list of items.
 abstract class BaseListCubit<T> extends Cubit<BaseListState<T>> {
   BaseListCubit() : super(const ListInitial());
 

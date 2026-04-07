@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// A bottom sheet list widget with optional search filtering.
 class SearchableBottomSheetList<T> extends StatefulWidget {
   final Future<List<T>> Function() itemsProvider;
   final Widget Function(T item) itemBuilder;

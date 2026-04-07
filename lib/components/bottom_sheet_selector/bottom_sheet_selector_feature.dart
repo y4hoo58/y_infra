@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'cubit/bottom_sheet_selector_cubit.dart';
 
+/// Provides a [BottomSheetSelectorCubit] to its subtree with an optional initial value.
 class BottomSheetSelectorFeature<T> extends StatelessWidget {
   final Widget child;
   final T? initialValue;

@@ -1,3 +1,5 @@
+/// Describes a database table by its name and column definitions,
+/// and provides formatted column identifiers for SQL statements.
 abstract class IDatabaseTable {
   final String name;
 

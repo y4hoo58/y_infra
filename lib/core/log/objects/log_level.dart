@@ -1,3 +1,4 @@
+/// Severity levels for log entries, from informational events to errors.
 enum LogLevel {
   event,
   debug,

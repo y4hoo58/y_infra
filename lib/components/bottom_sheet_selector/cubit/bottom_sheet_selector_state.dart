@@ -1,5 +1,6 @@
 part of 'bottom_sheet_selector_cubit.dart';
 
+/// Sealed state hierarchy for the bottom sheet selector (initial, selecting, selected).
 sealed class BottomSheetSelectorState extends Equatable {
   const BottomSheetSelectorState();
 

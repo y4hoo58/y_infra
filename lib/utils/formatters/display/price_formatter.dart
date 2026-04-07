@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 
+/// Utility for formatting prices, discounts, and price ranges with locale support.
 class PriceFormatter {
   PriceFormatter._();
 

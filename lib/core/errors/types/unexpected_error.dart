@@ -1,6 +1,7 @@
 import '../app_error.dart';
 import '../error_category.dart';
 
+/// Catch-all error for unclassified or unexpected failures.
 class UnexpectedError extends AppError {
   const UnexpectedError({
     String message = 'An unexpected error occurred. Please try again.',

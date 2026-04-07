@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Represents a single entry in the navigation stack with route name and arguments.
 class RouteStackItem {
   final String? name;
   final Object? args;

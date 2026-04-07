@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+/// Sealed state hierarchy for paginated data (loading, loaded with page info, error, refreshing).
 sealed class PaginatedState<T> extends Equatable {
   const PaginatedState();
 

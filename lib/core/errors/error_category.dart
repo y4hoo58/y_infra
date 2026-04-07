@@ -1,3 +1,4 @@
+/// High-level classification for application errors.
 enum ErrorCategory {
   network,
   authentication,

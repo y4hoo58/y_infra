@@ -2,6 +2,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../i_permission_handler.dart';
 
+/// Handler for requesting and checking general storage permission.
 class StoragePermissionHandler extends IPermissionHandler {
   const StoragePermissionHandler();
 

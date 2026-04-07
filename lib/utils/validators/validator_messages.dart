@@ -1,3 +1,4 @@
+/// Customizable validation error messages used by [Validators].
 class ValidatorMessages {
   final String required;
   final String invalidEmail;

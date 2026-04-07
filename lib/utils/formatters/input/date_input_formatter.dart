@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/services.dart';
 
+/// Text input formatter that auto-inserts `/` separators for date input (DD/MM/YYYY).
 class DateInputFormatter extends TextInputFormatter {
   const DateInputFormatter();
 

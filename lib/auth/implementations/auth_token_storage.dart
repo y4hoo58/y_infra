@@ -2,6 +2,7 @@ import '../../core/storage/i_local_storage.dart';
 import '../i_auth_token_storage.dart';
 import '../objects/token_pair.dart';
 
+/// Stores and retrieves access/refresh tokens using local storage.
 class AuthTokenStorage implements IAuthTokenStorage {
   static const String _accessTokenKey = 'access_token';
   static const String _refreshTokenKey = 'refresh_token';

@@ -3,6 +3,8 @@ import 'dart:async';
 import '../i_notifier_service.dart';
 import '../objects/notifier_data.dart';
 
+/// Broadcast-based implementation of [INotifierService] using a
+/// [StreamController].
 class NotifierService implements INotifierService {
   final _streamController = StreamController<NotifierData>.broadcast();
 

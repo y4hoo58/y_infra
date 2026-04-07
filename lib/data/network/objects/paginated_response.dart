@@ -1,3 +1,5 @@
+/// Wraps a page of items with pagination metadata (page number, totals)
+/// and provides factory parsing from JSON.
 class PaginatedResponse<T> {
   final List<T> items;
   final int pageNumber;

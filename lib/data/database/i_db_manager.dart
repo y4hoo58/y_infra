@@ -10,6 +10,8 @@ import 'mapper/insert/i_db_insert_data_raw_mapper.dart';
 import 'mapper/update/i_db_update_data_mapper.dart';
 import 'objects/i_database_table.dart';
 
+/// Abstract interface for managing SQLite database operations
+/// including CRUD, table creation, and lifecycle management.
 abstract class IDbManager {
   final String dbName;
   final int dbVersion;

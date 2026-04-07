@@ -2,6 +2,7 @@ import 'package:string_validator/string_validator.dart' as sv;
 
 import 'validator_messages.dart';
 
+/// Collection of reusable form field validators (email, password, phone, etc.).
 class Validators {
   final ValidatorMessages messages;
 

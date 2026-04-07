@@ -4,6 +4,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 
 import '../i_connectivity_service.dart';
 
+/// Concrete connectivity service using the connectivity_plus package.
 class ConnectivityService implements IConnectivityService {
   final Connectivity _connectivity;
   final _statusController = StreamController<bool>.broadcast();

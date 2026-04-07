@@ -9,6 +9,8 @@ import 'types/server_error.dart';
 import 'types/unexpected_error.dart';
 import 'types/validation_error.dart';
 
+/// Maps raw exceptions (including [DioException]) to typed [AppError]
+/// subclasses based on status codes and error types.
 class ErrorMapper {
   ErrorMapper._();
 

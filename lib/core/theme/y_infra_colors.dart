@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+/// A [ThemeExtension] providing additional semantic colours (success, warning)
+/// for the y_infra design system.
 class YInfraColors extends ThemeExtension<YInfraColors> {
   final Color successColor;
   final Color warningColor;

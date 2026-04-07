@@ -7,6 +7,8 @@ import '../../converter/i_file_converter.dart';
 import '../../path/i_path_provider.dart';
 import '../i_file_controller.dart';
 
+/// File controller for reading and writing JSON files,
+/// supporting both asset and filesystem sources.
 class JsonFileController extends IFileController {
   const JsonFileController();
 

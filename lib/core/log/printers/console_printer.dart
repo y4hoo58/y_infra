@@ -6,6 +6,8 @@ import '../objects/log_level.dart';
 import '../objects/log_data.dart';
 import 'i_printer.dart';
 
+/// Prints log entries to the debug console with ANSI colour codes on Android
+/// and plain text on iOS.
 class ConsolePrinter extends IPrinter {
   const ConsolePrinter();
 

@@ -1,3 +1,4 @@
+/// Wraps a Firebase Realtime Database reference path string.
 abstract class IFirebaseDbReferencePath {
   final String path;
 

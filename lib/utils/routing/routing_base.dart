@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+/// Base class for app routing, providing iOS, Material, and opacity page transitions.
 abstract class RoutingBase {
   final GlobalKey<NavigatorState> navigatorKey;
 

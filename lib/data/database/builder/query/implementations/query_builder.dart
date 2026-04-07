@@ -1,5 +1,6 @@
 import '../i_query_builder.dart';
 
+/// Builds SQL WHERE and LIMIT clauses from optional filter arguments and a row limit.
 class QueryBuilder extends IQueryBuilder {
   final int? amount;
   final List<String>? whereArgs;

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../cubit/bottom_sheet_selector_cubit.dart';
 
+/// Styled tappable container that displays the currently selected item in the bottom sheet selector.
 class BottomSheetSelectorSelectedContainer<T> extends StatelessWidget {
   final T selectedItem;
   final Widget Function(T) builder;

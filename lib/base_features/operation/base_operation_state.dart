@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../core/errors/app_error.dart';
 
+/// Base state hierarchy for single async operations (initial, in-progress, success, failure).
 abstract class BaseOperationState extends Equatable {
   const BaseOperationState();
 

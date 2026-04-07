@@ -1,3 +1,23 @@
+## 0.0.4
+
+- Added `InterceptorPipeline` for composable Dio interceptor chains
+- Added `AuthCubit` with token check, login/logout, and auto-logout on auth failures
+- Added `AuthState` hierarchy (`AuthInitial`, `AuthLoading`, `Authenticated`, `Unauthenticated`)
+- Added `UnauthenticatedReason` enum (`noToken`, `sessionExpired`, `loggedOut`)
+- Added `FilterableMixin` — generic filtering mixin for any Cubit (search, sort, filter)
+- Improved `BaseOperationCubit` — now generic with built-in `execute()` and duplicate call guard
+- Removed `SafeOperationMixin` (merged into `BaseOperationCubit`)
+- Removed `FilterablePaginatedCubit` (use `PaginatedCubit with FilterableMixin` instead)
+- Removed `CorrelationIdInterceptor`
+- Restructured `data/network/` into `config/`, `datasource/`, `interceptors/`, `objects/`
+- Restructured `utils/formatters/` into `input/` and `display/` subfolders
+- Moved `token_pair.dart` to `auth/objects/`
+- Moved `components/` to top-level `lib/components/`
+- Moved `mixins/` to top-level `lib/mixins/`
+- Moved `map_launcher` to `utils/map/` with configurable URLs and error message
+- Added doc comments to all files
+- Updated README with full usage examples
+
 ## 0.0.3
 
 - Added TTL (time-to-live) support to cache system

@@ -3,6 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../mixins/snackbar_y.dart';
 
+/// Launches Apple Maps or Google Maps for a given coordinate, with fallback error handling.
 class MapLauncher with SnackBarY {
   final Uri Function(double lat, double lng) appleMapsUrlBuilder;
   final Uri Function(double lat, double lng) googleMapsUrlBuilder;

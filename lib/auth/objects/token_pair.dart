@@ -1,3 +1,4 @@
+/// Holds an access token and refresh token pair.
 class TokenPair {
   final String accessToken;
   final String refreshToken;

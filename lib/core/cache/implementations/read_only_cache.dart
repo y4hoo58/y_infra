@@ -1,6 +1,8 @@
 import '../i_cache.dart';
 import '../objects/cache_type.dart';
 
+/// A cache wrapper that delegates reads to [_delegate] but silently ignores
+/// all write and removal operations.
 class ReadOnlyCache implements ICache {
   final ICache _delegate;
 

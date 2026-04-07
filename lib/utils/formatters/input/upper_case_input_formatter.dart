@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 
+/// Text input formatter that converts all input to uppercase.
 class UpperCaseInputFormatter extends TextInputFormatter {
   const UpperCaseInputFormatter();
 

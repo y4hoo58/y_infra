@@ -2,6 +2,7 @@ import '../core/cache/i_cache.dart';
 import '../core/cache/objects/cache_type.dart';
 import '../core/notifier/i_notifier_service.dart';
 
+/// Internal reference-counted entry for deduplicating in-flight requests.
 class _QueueEntry<T> {
   final Future<T> future;
   int refCount;
@@ -9,6 +10,8 @@ class _QueueEntry<T> {
   _QueueEntry(this.future) : refCount = 1;
 }
 
+/// Base repository that deduplicates concurrent requests, supports caching,
+/// and notifies listeners on data changes.
 abstract class IRepository {
   final INotifierService notifierService;
 

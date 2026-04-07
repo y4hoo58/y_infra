@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 
 part 'bottom_sheet_selector_state.dart';
 
+/// Cubit that manages the selection flow for a bottom sheet selector.
 class BottomSheetSelectorCubit<T> extends Cubit<BottomSheetSelectorState> {
   BottomSheetSelectorCubit() : super(const BottomSheetSelectorInitial());
 

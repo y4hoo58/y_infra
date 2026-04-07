@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 
+/// Holds base network configuration (URL, timeouts) and creates a [Dio] client from it.
 class BaseNetworkConfig {
   final String baseUrl;
   final Duration connectTimeout;

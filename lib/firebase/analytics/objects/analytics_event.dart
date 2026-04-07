@@ -1,5 +1,6 @@
 import 'analytics_data.dart';
 
+/// Represents a named Firebase Analytics event with optional parameters.
 abstract class FirebaseAnalyticsEvent {
   final Map<String, Object>? params;
 
