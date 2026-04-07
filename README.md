@@ -101,7 +101,7 @@ MaterialApp(
 
 ### Network
 
-Configurable Dio setup with interceptors for auth, logging, and correlation IDs.
+Configurable Dio setup with a composable interceptor pipeline.
 
 ```dart
 final config = BaseNetworkConfig(
@@ -111,7 +111,65 @@ final config = BaseNetworkConfig(
 final dio = config.createDio();
 ```
 
-**Auth interceptor** with proactive token refresh, JWT expiry detection, retry on 401, and completer-based refresh locking.
+#### BaseInterceptor
+
+A composable interceptor that runs a list of interceptors in sequence. If any interceptor resolves or rejects, the rest are skipped.
+
+```dart
+dio.interceptors.add(
+  BaseInterceptor([
+    HeaderInterceptor(appVersion: '1.0.0'),
+    AuthInterceptor(
+      authTokenStorage: tokenStorage,
+      onTokenRefresh: (refresh) => api.refreshToken(refresh),
+      onAuthFailure: () => router.go('/login'),
+      retryDio: Dio(), // separate Dio instance for retry
+    ),
+    LoggingInterceptor(),
+  ]),
+);
+```
+
+Interceptors run in **declaration order**:
+- `onRequest`: 1st → 2nd → 3rd → Dio sends the request
+- `onResponse`: 1st → 2nd → 3rd → response returned
+- `onError`: 1st → 2nd → 3rd → error returned
+
+Any interceptor can short-circuit the pipeline:
+- `handler.resolve(response)` — skip remaining interceptors, return the response
+- `handler.reject(error)` — skip remaining interceptors, return the error
+- `handler.next(...)` — continue to the next interceptor
+
+You can also use each interceptor standalone without `BaseInterceptor`:
+
+```dart
+dio.interceptors.addAll([
+  AuthInterceptor(...),
+  LoggingInterceptor(),
+]);
+```
+
+#### AuthInterceptor
+
+JWT auth with proactive token refresh, 401 retry, and concurrent refresh locking.
+
+```dart
+AuthInterceptor(
+  authTokenStorage: tokenStorage,
+  onTokenRefresh: (refreshToken) => api.refreshToken(refreshToken),
+  onAuthFailure: () => authCubit.logout(),
+  retryDio: Dio(BaseOptions(baseUrl: 'https://api.example.com')),
+  skipAuthPaths: ['/login', '/register'], // paths that don't need auth
+)
+```
+
+#### LoggingInterceptor
+
+Logs requests, responses, and errors to the debug console. Only active in debug mode. Masks authorization headers and truncates long response bodies.
+
+```dart
+LoggingInterceptor()
+```
 
 ### Database
 

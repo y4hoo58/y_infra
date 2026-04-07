@@ -1,6 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
+/// Logs HTTP request, response, and error details to the debug console.
+///
+/// - Only active in debug mode ([kDebugMode]).
+/// - Masks authorization headers to avoid leaking tokens.
+/// - Truncates response bodies longer than 500 characters.
+///
+/// Compatible with [BaseInterceptor] — can be used standalone or as part of a pipeline.
 class LoggingInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {

@@ -167,6 +167,6 @@ export 'push/utility/environment_interpreter.dart';
 export 'data/i_remote_datasource.dart';
 export 'data/network/base_network_config.dart';
 export 'data/network/objects/paginated_response.dart';
+export 'data/network/interceptors/base_interceptor.dart';
 export 'data/network/interceptors/auth_interceptor.dart';
 export 'data/network/interceptors/logging_interceptor.dart';
-export 'data/network/interceptors/correlation_id_interceptor.dart';

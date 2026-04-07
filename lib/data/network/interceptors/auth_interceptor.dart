@@ -10,6 +10,14 @@ import '../../../auth/token_pair.dart';
 typedef TokenRefreshCallback = Future<TokenPair?> Function(String refreshToken);
 typedef AuthFailureCallback = void Function();
 
+/// Attaches JWT access tokens to outgoing requests and handles token refresh.
+///
+/// - Proactively refreshes tokens that are about to expire (within [_refreshThreshold]).
+/// - On 401 responses, attempts a single token refresh and retries the request via [_retryDio].
+/// - Concurrent requests during a refresh are queued and resolved with the new token.
+/// - Paths listed in [_skipAuthPaths] bypass authentication entirely.
+///
+/// Compatible with [BaseInterceptor] — can be used standalone or as part of a pipeline.
 class AuthInterceptor extends Interceptor {
   final AuthTokenStorage _authTokenStorage;
   final TokenRefreshCallback _onTokenRefresh;
