@@ -131,8 +131,8 @@ export 'utils/routing/app_nav_observer.dart';
 export 'utils/routing/routing_base.dart';
 
 // Features
-export 'base_features/crud/cubit/crud_cubit.dart';
-export 'base_features/crud/cubit/crud_state.dart';
+export 'base_features/crud/crud_cubit.dart';
+export 'base_features/crud/crud_state.dart';
 export 'base_features/list/base_list_cubit.dart';
 export 'base_features/list/base_list_state.dart';
 export 'base_features/operation/base_operation_cubit.dart';

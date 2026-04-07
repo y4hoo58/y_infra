@@ -1,8 +1,40 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/errors/error_mapper.dart';
+import '../../core/errors/error_mapper.dart';
 import 'crud_state.dart';
 
+/// Base cubit for full CRUD operations with filtering, selection, and list management.
+///
+/// Subclasses must implement [getId] and [fetchItems].
+/// Provides [performSave] and [performDelete] for create/update/delete with
+/// automatic state transitions (saving/deleting → success → loaded, or error → loaded).
+///
+/// Helper methods [addToList] and [updateInList] simplify list updates after save operations.
+///
+/// ```dart
+/// class UsersCubit extends CrudCubit<User> {
+///   final UserRepository _repo;
+///   UsersCubit(this._repo);
+///
+///   @override
+///   int getId(User item) => item.id;
+///
+///   @override
+///   Future<List<User>> fetchItems() => _repo.getUsers();
+///
+///   Future<void> createUser(CreateUserDto dto) => performSave(
+///     operation: () => _repo.create(dto),
+///     successMessage: 'User created',
+///     updateList: (user) => addToList(user),
+///   );
+///
+///   Future<void> deleteUser(int id) => performDelete(
+///     operation: () => _repo.delete(id),
+///     id: id,
+///     successMessage: 'User deleted',
+///   );
+/// }
+/// ```
 abstract class CrudCubit<T> extends Cubit<CrudState<T>> {
   List<T> _items = [];
 
