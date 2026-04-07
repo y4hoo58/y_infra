@@ -67,14 +67,14 @@ export 'platform/permission/implementations/external_storage.dart';
 export 'platform/permission/implementations/motion_activity.dart';
 
 // Formatters
-export 'utils/formatters/date_input_formatter.dart';
-export 'utils/formatters/upper_case_input_formatter.dart';
-export 'utils/formatters/phone_number_input_formatter.dart';
-export 'utils/formatters/date_time_formatter.dart';
-export 'utils/formatters/price_formatter.dart';
-export 'utils/formatters/separator_input_formatter.dart';
-export 'utils/formatters/credit_card_number_input_formatter.dart';
-export 'utils/formatters/card_expiry_input_formatter.dart';
+export 'utils/formatters/input/date_input_formatter.dart';
+export 'utils/formatters/input/upper_case_input_formatter.dart';
+export 'utils/formatters/input/phone_number_input_formatter.dart';
+export 'utils/formatters/input/separator_input_formatter.dart';
+export 'utils/formatters/input/credit_card_number_input_formatter.dart';
+export 'utils/formatters/input/card_expiry_input_formatter.dart';
+export 'utils/formatters/display/date_time_formatter.dart';
+export 'utils/formatters/display/price_formatter.dart';
 
 // Connectivity
 export 'platform/connectivity/i_connectivity_service.dart';
