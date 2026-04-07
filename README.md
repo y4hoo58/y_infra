@@ -111,13 +111,13 @@ final config = BaseNetworkConfig(
 final dio = config.createDio();
 ```
 
-#### BaseInterceptor
+#### InterceptorPipeline
 
 A composable interceptor that runs a list of interceptors in sequence. If any interceptor resolves or rejects, the rest are skipped.
 
 ```dart
 dio.interceptors.add(
-  BaseInterceptor([
+  InterceptorPipeline([
     HeaderInterceptor(appVersion: '1.0.0'),
     AuthInterceptor(
       authTokenStorage: tokenStorage,
@@ -140,7 +140,7 @@ Any interceptor can short-circuit the pipeline:
 - `handler.reject(error)` — skip remaining interceptors, return the error
 - `handler.next(...)` — continue to the next interceptor
 
-You can also use each interceptor standalone without `BaseInterceptor`:
+You can also use each interceptor standalone without `InterceptorPipeline`:
 
 ```dart
 dio.interceptors.addAll([

@@ -17,7 +17,7 @@ typedef AuthFailureCallback = void Function();
 /// - Concurrent requests during a refresh are queued and resolved with the new token.
 /// - Paths listed in [_skipAuthPaths] bypass authentication entirely.
 ///
-/// Compatible with [BaseInterceptor] — can be used standalone or as part of a pipeline.
+/// Compatible with [InterceptorPipeline] — can be used standalone or as part of a pipeline.
 class AuthInterceptor extends Interceptor {
   final AuthTokenStorage _authTokenStorage;
   final TokenRefreshCallback _onTokenRefresh;

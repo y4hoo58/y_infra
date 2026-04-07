@@ -10,7 +10,7 @@ import 'package:dio/dio.dart';
 /// ```dart
 /// final dio = Dio();
 /// dio.interceptors.add(
-///   BaseInterceptor([
+///   InterceptorPipeline([
 ///     ConnectivityInterceptor(connectivityService),
 ///     HeaderInterceptor(appVersion: '1.0.0'),
 ///     AuthInterceptor(...),
@@ -18,10 +18,10 @@ import 'package:dio/dio.dart';
 ///   ]),
 /// );
 /// ```
-class BaseInterceptor extends Interceptor {
+class InterceptorPipeline extends Interceptor {
   final List<Interceptor> interceptors;
 
-  BaseInterceptor(this.interceptors);
+  InterceptorPipeline(this.interceptors);
 
   @override
   Future<void> onRequest(
