@@ -4,6 +4,25 @@ import '../../../data/network/objects/paginated_response.dart';
 import '../../../core/errors/error_mapper.dart';
 import 'paginated_state.dart';
 
+/// Base cubit for paginated list loading with load-more, refresh,
+/// item manipulation, selection, and error recovery.
+///
+/// Subclasses must implement [getId] and [fetchPage].
+/// Supports [FilterableMixin] for search, sort, and filter capabilities.
+///
+/// ```dart
+/// class ProductsCubit extends PaginatedCubit<Product> {
+///   final ProductRepository _repo;
+///   ProductsCubit(this._repo);
+///
+///   @override
+///   int getId(Product item) => item.id;
+///
+///   @override
+///   Future<PaginatedResponse<Product>> fetchPage(int page, int pageSize) =>
+///       _repo.getProducts(page: page, pageSize: pageSize);
+/// }
+/// ```
 abstract class PaginatedCubit<T> extends Cubit<PaginatedState<T>> {
   List<T> _items = [];
 
