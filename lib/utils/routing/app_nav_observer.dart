@@ -13,7 +13,7 @@ class AppNavObserver extends NavigatorObserver {
 
   @override
   void didPop(Route route, Route? previousRoute) {
-    if (previousRoute != null) navStack.removeLast();
+    _removeRoute(route);
     super.didPop(route, previousRoute);
   }
 
@@ -25,7 +25,7 @@ class AppNavObserver extends NavigatorObserver {
 
   @override
   void didRemove(Route route, Route? previousRoute) {
-    if (previousRoute != null) navStack.removeLast();
+    _removeRoute(route);
     super.didRemove(route, previousRoute);
   }
 
@@ -34,5 +34,15 @@ class AppNavObserver extends NavigatorObserver {
     if (oldRoute != null) navStack.removeLast();
     if (newRoute != null) navStack.add(RouteStackItem.fromRoute(newRoute));
     super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
+  }
+
+  void _removeRoute(Route route) {
+    final name = route.settings.name;
+    for (var i = navStack.length - 1; i >= 0; i--) {
+      if (navStack[i].name == name) {
+        navStack.removeAt(i);
+        break;
+      }
+    }
   }
 }
