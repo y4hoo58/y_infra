@@ -1,3 +1,20 @@
+## 0.0.5
+
+- **BREAKING:** `CrudCubit<T>` → `CrudCubit<T, Id>` — generic ID type instead of hardcoded `int`
+- **BREAKING:** `PaginatedCubit<T>` → `PaginatedCubit<T, Id>` — generic ID type instead of hardcoded `int`
+- **BREAKING:** `BaseOperationCubit<TResult>` → `BaseOperationCubit<TResult, Id>` — generic ID type for `targetId`
+- **BREAKING:** `EndpointResponseLogData` and `NetworkResponseLogData` now take plain fields (`statusCode`, `body`, `url`) instead of `http` `Response`
+- **BREAKING:** `CrudSaved` and `CrudDeleted` now carry an `items` field; `CrudCubit` emits a single state instead of two
+- Fixed `AuthInterceptor` and `IRemoteDatasource` depending on concrete `AuthTokenStorage` instead of `IAuthTokenStorage`
+- Fixed `ExternalStoragePermissionHandler.g2g` checking wrong permission (`Permission.storage` vs `Permission.manageExternalStorage`)
+- Fixed `AppNavObserver.didPop`/`didRemove` removing wrong routes from the navigation stack
+- Fixed `EventLogData.message` throwing `UnimplementedError` — now accepts a message string
+- Fixed `TokenPair` not extending `Equatable`, causing missed state changes in `AuthState`
+- Added `ErrorMessages` — centralised, overridable error messages for i18n support
+- Updated all error types and `ErrorMapper` to use `ErrorMessages.instance` instead of hardcoded English
+- Removed `LocationService` auto-init in constructor — consumers now call `init()` explicitly
+- Removed `http` package dependency (no longer needed)
+
 ## 0.0.4
 
 - Added `InterceptorPipeline` for composable Dio interceptor chains
