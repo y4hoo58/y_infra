@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
-import '../../../auth/implementations/auth_token_storage.dart';
+import '../../../auth/i_auth_token_storage.dart';
 import '../../../auth/objects/token_pair.dart';
 
 typedef TokenRefreshCallback = Future<TokenPair?> Function(String refreshToken);
@@ -19,7 +19,7 @@ typedef AuthFailureCallback = void Function();
 ///
 /// Compatible with [InterceptorPipeline] — can be used standalone or as part of a pipeline.
 class AuthInterceptor extends Interceptor {
-  final AuthTokenStorage _authTokenStorage;
+  final IAuthTokenStorage _authTokenStorage;
   final TokenRefreshCallback _onTokenRefresh;
   final AuthFailureCallback _onAuthFailure;
   final Dio _retryDio;
@@ -31,7 +31,7 @@ class AuthInterceptor extends Interceptor {
   Completer<String?>? _refreshCompleter;
 
   AuthInterceptor({
-    required AuthTokenStorage authTokenStorage,
+    required IAuthTokenStorage authTokenStorage,
     required TokenRefreshCallback onTokenRefresh,
     required AuthFailureCallback onAuthFailure,
     required Dio retryDio,
