@@ -104,12 +104,13 @@ abstract class CrudCubit<T> extends Cubit<CrudState<T>> {
       final result = await operation();
       if (isClosed) return;
       _items = List.unmodifiable(updateList(result));
-      emit(CrudSaved<T>(successMessage, item: result));
-      emit(CrudLoaded<T>(items: _items));
+      emit(CrudSaved<T>(successMessage, item: result, items: _items));
     } catch (e) {
       if (isClosed) return;
-      emit(CrudError<T>(ErrorMapper.map(e).message));
-      emit(CrudLoaded<T>(items: _items));
+      emit(CrudError<T>(
+        ErrorMapper.map(e).message,
+        previousState: CrudLoaded<T>(items: _items),
+      ));
     }
   }
 
@@ -127,12 +128,13 @@ abstract class CrudCubit<T> extends Cubit<CrudState<T>> {
       _items = List.unmodifiable(
         _items.where((item) => getId(item) != id).toList(),
       );
-      emit(CrudDeleted<T>(successMessage));
-      emit(CrudLoaded<T>(items: _items));
+      emit(CrudDeleted<T>(successMessage, items: _items));
     } catch (e) {
       if (isClosed) return;
-      emit(CrudError<T>(ErrorMapper.map(e).message));
-      emit(CrudLoaded<T>(items: _items));
+      emit(CrudError<T>(
+        ErrorMapper.map(e).message,
+        previousState: CrudLoaded<T>(items: _items),
+      ));
     }
   }
 

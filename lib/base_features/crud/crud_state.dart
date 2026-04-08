@@ -47,7 +47,8 @@ final class CrudLoaded<T> extends CrudState<T> {
   }
 
   @override
-  List<Object?> get props => [items, filteredItems, isActiveFilter, selectedItem];
+  List<Object?> get props =>
+      [items, filteredItems, isActiveFilter, selectedItem];
 }
 
 final class CrudError<T> extends CrudState<T> {
@@ -67,11 +68,12 @@ final class CrudSaving<T> extends CrudState<T> {
 final class CrudSaved<T> extends CrudState<T> {
   final String message;
   final T? item;
+  final List<T> items;
 
-  const CrudSaved(this.message, {this.item});
+  const CrudSaved(this.message, {this.item, required this.items});
 
   @override
-  List<Object?> get props => [message, item];
+  List<Object?> get props => [message, item, items];
 }
 
 final class CrudDeleting<T> extends CrudState<T> {
@@ -80,9 +82,10 @@ final class CrudDeleting<T> extends CrudState<T> {
 
 final class CrudDeleted<T> extends CrudState<T> {
   final String message;
+  final List<T> items;
 
-  const CrudDeleted(this.message);
+  const CrudDeleted(this.message, {required this.items});
 
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [message, items];
 }
