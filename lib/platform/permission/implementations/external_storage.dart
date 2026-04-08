@@ -7,7 +7,7 @@ class ExternalStoragePermissionHandler extends IPermissionHandler {
   const ExternalStoragePermissionHandler();
 
   @override
-  Future<bool> get g2g => Permission.storage.isGranted;
+  Future<bool> get g2g => Permission.manageExternalStorage.isGranted;
 
   @override
   Future<void> askPermIfNeeded() async {
