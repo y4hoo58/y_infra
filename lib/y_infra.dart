@@ -17,6 +17,9 @@ export 'core/notifier/implementations/notifier_service.dart';
 // Theme
 export 'core/theme/y_infra_colors.dart';
 
+// Locale
+export 'base_features/locale/locale_cubit.dart';
+
 // Storage
 export 'core/storage/i_local_storage.dart';
 export 'core/storage/implementations/secure_storage.dart';
