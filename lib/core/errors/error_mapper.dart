@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 
 import 'app_error.dart';
+import 'error_messages.dart';
 import 'types/auth_error.dart';
 import 'types/conflict_error.dart';
 import 'types/network_error.dart';
@@ -27,6 +28,7 @@ class ErrorMapper {
   }
 
   static AppError _mapDioException(DioException e, [StackTrace? stackTrace]) {
+    final m = ErrorMessages.instance;
     switch (e.type) {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
@@ -34,17 +36,17 @@ class ErrorMapper {
         return TimeoutError(originalError: e);
 
       case DioExceptionType.connectionError:
-        return const NetworkError();
+        return NetworkError(message: m.networkError);
 
       case DioExceptionType.badCertificate:
-        return const NetworkError(message: 'Security certificate error');
+        return NetworkError(message: m.badCertificate);
 
       case DioExceptionType.badResponse:
         return _mapResponseError(e.response, e);
 
       case DioExceptionType.cancel:
         return UnexpectedError(
-          message: 'Request cancelled',
+          message: m.requestCancelled,
           originalError: e,
         );
 
@@ -53,8 +55,7 @@ class ErrorMapper {
     }
   }
 
-  static AppError _mapResponseError(
-      Response? response, DioException original) {
+  static AppError _mapResponseError(Response? response, DioException original) {
     if (response == null) {
       return UnexpectedError(originalError: original);
     }
@@ -63,42 +64,43 @@ class ErrorMapper {
     final data = response.data;
     final message = _extractMessage(data);
     final validationErrors = _extractValidationErrors(data);
+    final m = ErrorMessages.instance;
 
     switch (statusCode) {
       case 400:
         return ValidationError(
-          message: message ?? 'Bad request',
+          message: message ?? m.badRequest,
           errors: validationErrors,
           originalError: original,
         );
 
       case 401:
         return UnauthorisedError(
-          message: message ?? 'Session expired. Please log in again',
+          message: message ?? m.sessionExpired,
           originalError: original,
         );
 
       case 403:
         return UnauthorisedError(
-          message: message ?? 'You are not authorised to perform this action',
+          message: message ?? m.unauthorised,
           originalError: original,
         );
 
       case 404:
         return NotFoundError(
-          message: message ?? 'Resource not found',
+          message: message ?? m.notFound,
           originalError: original,
         );
 
       case 409:
         return ConflictError(
-          message: message ?? 'This resource already exists',
+          message: message ?? m.conflict,
           originalError: original,
         );
 
       case 422:
         return ValidationError(
-          message: message ?? 'Validation error',
+          message: message ?? m.validationError,
           errors: validationErrors,
           originalError: original,
         );
@@ -111,13 +113,13 @@ class ErrorMapper {
       case 503:
       case 504:
         return ServerError(
-          message: message ?? 'Server error. Please try again later',
+          message: message ?? m.serverError,
           originalError: original,
         );
 
       default:
         return UnexpectedError(
-          message: message ?? 'An error occurred',
+          message: message ?? m.genericError,
           originalError: original,
         );
     }

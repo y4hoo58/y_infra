@@ -33,6 +33,7 @@ export 'core/errors/types/conflict_error.dart';
 export 'core/errors/types/network_error.dart';
 export 'core/errors/types/server_error.dart';
 export 'core/errors/error_mapper.dart';
+export 'core/errors/error_messages.dart';
 
 // Log
 export 'core/log/objects/log_level.dart';
