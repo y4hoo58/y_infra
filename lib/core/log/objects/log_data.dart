@@ -70,13 +70,15 @@ class ApiRequestLogData extends LogData {
 }
 
 class EventLogData extends LogData {
-  const EventLogData();
+  final String _message;
+
+  const EventLogData(this._message);
 
   @override
   LogLevel get level => LogLevel.event;
 
   @override
-  String get message => throw UnimplementedError();
+  String get message => _message;
 }
 
 class VarInfoLogData extends LogData {
@@ -107,8 +109,8 @@ class MethodCallLogData extends LogData {
   final String methodName;
   final String? _extraMessage;
 
-  const MethodCallLogData(this.className, this.methodName,
-      {String? message}) : _extraMessage = message;
+  const MethodCallLogData(this.className, this.methodName, {String? message})
+      : _extraMessage = message;
 
   @override
   LogLevel get level => LogLevel.debug;
