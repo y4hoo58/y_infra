@@ -6,7 +6,7 @@ import 'base_operation_state.dart';
 /// Base cubit for single async operations (create, update, delete, toggle, etc.).
 ///
 /// ```dart
-/// class DeleteItemCubit extends BaseOperationCubit {
+/// class DeleteItemCubit extends BaseOperationCubit<void, int> {
 ///   final ItemRepository _repo;
 ///   DeleteItemCubit(this._repo);
 ///
@@ -16,25 +16,25 @@ import 'base_operation_state.dart';
 ///   );
 /// }
 /// ```
-abstract class BaseOperationCubit<TResult>
-    extends Cubit<BaseOperationState> {
-  BaseOperationCubit() : super(const OperationInitial());
+abstract class BaseOperationCubit<TResult, Id>
+    extends Cubit<BaseOperationState<Id>> {
+  BaseOperationCubit() : super(OperationInitial<Id>());
 
   /// Runs [operation] with automatic loading, success, and error state handling.
   /// Ignores the call if an operation is already in progress.
   Future<void> execute({
     required Future<TResult> Function() operation,
-    int? targetId,
+    Id? targetId,
   }) async {
-    if (state is OperationInProgress) return;
-    emit(OperationInProgress(targetId: targetId));
+    if (state is OperationInProgress<Id>) return;
+    emit(OperationInProgress<Id>(targetId: targetId));
     try {
       final result = await operation();
       if (isClosed) return;
-      emit(OperationSuccess<TResult>(targetId: targetId, result: result));
+      emit(OperationSuccess<TResult, Id>(targetId: targetId, result: result));
     } catch (e, stack) {
       if (isClosed) return;
-      emit(OperationFailure(
+      emit(OperationFailure<Id>(
         targetId: targetId,
         error: ErrorMapper.map(e, stack),
       ));
@@ -42,6 +42,6 @@ abstract class BaseOperationCubit<TResult>
   }
 
   void reset() {
-    if (!isClosed) emit(const OperationInitial());
+    if (!isClosed) emit(OperationInitial<Id>());
   }
 }

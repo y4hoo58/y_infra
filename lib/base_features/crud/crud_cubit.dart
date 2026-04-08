@@ -12,7 +12,7 @@ import 'crud_state.dart';
 /// Helper methods [addToList] and [updateInList] simplify list updates after save operations.
 ///
 /// ```dart
-/// class UsersCubit extends CrudCubit<User> {
+/// class UsersCubit extends CrudCubit<User, int> {
 ///   final UserRepository _repo;
 ///   UsersCubit(this._repo);
 ///
@@ -35,7 +35,7 @@ import 'crud_state.dart';
 ///   );
 /// }
 /// ```
-abstract class CrudCubit<T> extends Cubit<CrudState<T>> {
+abstract class CrudCubit<T, Id> extends Cubit<CrudState<T>> {
   List<T> _items = [];
 
   List<T> get items => _items;
@@ -43,7 +43,7 @@ abstract class CrudCubit<T> extends Cubit<CrudState<T>> {
 
   CrudCubit() : super(CrudInitial<T>());
 
-  int getId(T item);
+  Id getId(T item);
 
   bool? getIsActive(T item) => null;
 
@@ -116,7 +116,7 @@ abstract class CrudCubit<T> extends Cubit<CrudState<T>> {
 
   Future<void> performDelete({
     required Future<void> Function() operation,
-    required int id,
+    required Id id,
     required String successMessage,
   }) async {
     if (isClosed) return;

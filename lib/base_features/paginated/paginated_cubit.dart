@@ -11,7 +11,7 @@ import 'paginated_state.dart';
 /// Supports [FilterableMixin] for search, sort, and filter capabilities.
 ///
 /// ```dart
-/// class ProductsCubit extends PaginatedCubit<Product> {
+/// class ProductsCubit extends PaginatedCubit<Product, int> {
 ///   final ProductRepository _repo;
 ///   ProductsCubit(this._repo);
 ///
@@ -23,7 +23,7 @@ import 'paginated_state.dart';
 ///       _repo.getProducts(page: page, pageSize: pageSize);
 /// }
 /// ```
-abstract class PaginatedCubit<T> extends Cubit<PaginatedState<T>> {
+abstract class PaginatedCubit<T, Id> extends Cubit<PaginatedState<T>> {
   List<T> _items = [];
 
   List<T> get items => _items;
@@ -32,7 +32,7 @@ abstract class PaginatedCubit<T> extends Cubit<PaginatedState<T>> {
 
   PaginatedCubit({this.pageSize = 10}) : super(PaginatedInitial<T>());
 
-  int getId(T item);
+  Id getId(T item);
 
   Future<PaginatedResponse<T>> fetchPage(int page, int pageSize);
 
@@ -155,7 +155,7 @@ abstract class PaginatedCubit<T> extends Cubit<PaginatedState<T>> {
     }
   }
 
-  void removeItem(int id) {
+  void removeItem(Id id) {
     if (state is PaginatedLoaded<T>) {
       final currentState = state as PaginatedLoaded<T>;
       _items = _items.where((item) => getId(item) != id).toList();
