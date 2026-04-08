@@ -1,5 +1,3 @@
-import 'package:http/http.dart';
-
 import 'log_level.dart';
 
 /// Base class for structured log entries carrying a message and [LogLevel].
@@ -14,13 +12,12 @@ abstract class LogData {
 
 class EndpointResponseLogData extends LogData {
   final Uri url;
-  final Response response;
+  final int statusCode;
 
-  const EndpointResponseLogData(this.response, this.url);
+  const EndpointResponseLogData({required this.statusCode, required this.url});
 
   @override
   String get message {
-    final statusCode = response.statusCode;
     return "Url->${url.toString()}||Status Code->$statusCode";
   }
 
@@ -29,14 +26,19 @@ class EndpointResponseLogData extends LogData {
 }
 
 class NetworkResponseLogData extends LogData {
-  final Response response;
+  final int statusCode;
+  final String body;
   final int maxLength;
 
-  const NetworkResponseLogData(this.response, {this.maxLength = 1000});
+  const NetworkResponseLogData({
+    required this.statusCode,
+    required this.body,
+    this.maxLength = 1000,
+  });
 
   @override
   String get message {
-    var m = "Status Code->${response.statusCode}||Body->${response.body}";
+    var m = "Status Code->$statusCode||Body->$body";
     return m.substring(0, m.length > maxLength ? maxLength : m.length);
   }
 
