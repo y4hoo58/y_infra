@@ -4,9 +4,7 @@ import '../i_location_service.dart';
 
 /// Concrete location service using Geolocator with position caching and streaming.
 class LocationService extends ILocationService {
-  LocationService({required super.positionCacheDuration}) {
-    init();
-  }
+  LocationService({required super.positionCacheDuration});
 
   @override
   Future<Position> get newPosition async {
