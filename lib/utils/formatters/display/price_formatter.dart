@@ -5,55 +5,71 @@ class PriceFormatter {
   PriceFormatter._();
 
   static String? _locale;
+  static String? _symbol;
+  static bool _symbolAfter = true;
+  static int _decimalDigits = 2;
 
-  static void configure({String? locale}) {
+  static void configure({
+    String? locale,
+    String? symbol,
+    bool? symbolAfter,
+    int? decimalDigits,
+  }) {
     _locale = locale;
+    _symbol = symbol;
+    if (symbolAfter != null) _symbolAfter = symbolAfter;
+    if (decimalDigits != null) _decimalDigits = decimalDigits;
   }
 
   static String format(
     double price, {
     String? symbol,
-    bool symbolAfter = true,
-    int decimalDigits = 2,
+    bool? symbolAfter,
+    int? decimalDigits,
     String? locale,
   }) {
     final effectiveLocale = locale ?? _locale;
+    final effectiveSymbol = symbol ?? _symbol;
+    final effectiveSymbolAfter = symbolAfter ?? _symbolAfter;
+    final effectiveDecimalDigits = decimalDigits ?? _decimalDigits;
     final formatter = NumberFormat.decimalPatternDigits(
       locale: effectiveLocale,
-      decimalDigits: decimalDigits,
+      decimalDigits: effectiveDecimalDigits,
     );
     final formattedPrice = formatter.format(price);
 
-    if (symbol == null || symbol.isEmpty) {
+    if (effectiveSymbol == null || effectiveSymbol.isEmpty) {
       return formattedPrice;
     }
 
-    if (symbolAfter) {
-      return '$formattedPrice $symbol';
+    if (effectiveSymbolAfter) {
+      return '$formattedPrice $effectiveSymbol';
     }
 
-    return '$symbol$formattedPrice';
+    return '$effectiveSymbol$formattedPrice';
   }
 
   static String formatCompact(
     double price, {
     String? symbol,
-    bool symbolAfter = true,
+    bool? symbolAfter,
     String? locale,
   }) {
     final effectiveLocale = locale ?? _locale;
+    final effectiveSymbol = symbol ?? _symbol;
+    final effectiveSymbolAfter = symbolAfter ?? _symbolAfter;
     final formatter = NumberFormat.compact(locale: effectiveLocale);
     final formattedPrice = formatter.format(price);
 
-    if (symbol == null || symbol.isEmpty) {
+    if (effectiveSymbol == null || effectiveSymbol.isEmpty) {
       return formattedPrice;
     }
 
-    if (symbolAfter) {
-      return '$formattedPrice $symbol';
+    if (effectiveSymbolAfter) {
+      return '$formattedPrice $effectiveSymbol';
     }
 
-    return '$symbol$formattedPrice';
+    return '$effectiveSymbol$formattedPrice';
   }
 
   static int discountPercentage(double originalPrice, double discountedPrice) {
@@ -75,8 +91,8 @@ class PriceFormatter {
     double minPrice,
     double maxPrice, {
     String? symbol,
-    bool symbolAfter = true,
-    int decimalDigits = 2,
+    bool? symbolAfter,
+    int? decimalDigits,
     String separator = ' - ',
     String? locale,
   }) {
