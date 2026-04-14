@@ -1,6 +1,6 @@
 name: y_infra
 description: A reusable Flutter infrastructure package — cache, storage, auth, network, database, permissions, formatters, and more.
-version: 0.0.5
+version: 0.0.6
 repository: https://github.com/y4hoo58/y_infra
 
 topics:
